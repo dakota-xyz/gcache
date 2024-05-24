@@ -1,5 +1,20 @@
 package gcache
 
+import "testing"
+
+func TestGet(t *testing.T) {
+	size := 1000
+	inputs := []CacheType{Simple, LRU, LFU}
+	for _, cacheType := range inputs {
+		t.Run(string(cacheType), func(t *testing.T) {
+			gc := buildTestCache(t, cacheType, size)
+
+			testSetCache(t, gc, size)
+			testGetCache(t, gc, size)
+		})
+	}
+}
+
 // func TestLoaderFunc(t *testing.T) {
 // 	size := 2
 // 	var testCaches = []*CacheBuilder{

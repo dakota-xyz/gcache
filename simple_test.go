@@ -1,18 +1,5 @@
 package gcache
 
-// import (
-// 	"fmt"
-// 	"testing"
-// 	"time"
-// )
-
-// func TestSimpleGet(t *testing.T) {
-// 	size := 1000
-// 	gc := buildTestCache(t, TYPE_SIMPLE, size)
-// 	testSetCache(t, gc, size)
-// 	testGetCache(t, gc, size)
-// }
-
 // func TestLoadingSimpleGet(t *testing.T) {
 // 	size := 1000
 // 	numbers := 1000

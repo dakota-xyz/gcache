@@ -17,12 +17,12 @@ const (
 var KeyNotFoundError = errors.New("Key not found.")
 
 // CacheType defines the different cache types
-type CacheType int
+type CacheType string
 
 const (
-	Simple CacheType = iota
-	LRU
-	LFU
+	Simple CacheType = "SIMPLE"
+	LRU    CacheType = "LRU"
+	LFU    CacheType = "LFU"
 )
 
 // Cache is an interface to interact with the cache

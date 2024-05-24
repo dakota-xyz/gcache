@@ -1,40 +1,45 @@
 package gcache
 
+import (
+	"fmt"
+	"testing"
+)
+
 // import (
 // 	"fmt"
 // 	"testing"
 // 	"time"
 // )
 
-// func loader(key string) (string, error) {
-// 	return fmt.Sprintf("valueFor%s", key), nil
-// }
+func loader(key string) (string, error) {
+	return fmt.Sprintf("valueFor%s", key), nil
+}
 
-// func testSetCache(t *testing.T, gc Cache[string, string], numbers int) {
-// 	for i := 0; i < numbers; i++ {
-// 		key := fmt.Sprintf("Key-%d", i)
-// 		value, err := loader(key)
-// 		if err != nil {
-// 			t.Error(err)
-// 			return
-// 		}
-// 		gc.Set(key, value)
-// 	}
-// }
+func testSetCache(t *testing.T, gc Cache[string, string], numbers int) {
+	for i := 0; i < numbers; i++ {
+		key := fmt.Sprintf("Key-%d", i)
+		value, err := loader(key)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		gc.Set(key, value)
+	}
+}
 
-// func testGetCache(t *testing.T, gc Cache[string, string], numbers int) {
-// 	for i := 0; i < numbers; i++ {
-// 		key := fmt.Sprintf("Key-%d", i)
-// 		v, err := gc.Get(key)
-// 		if err != nil {
-// 			t.Errorf("Unexpected error: %v", err)
-// 		}
-// 		expectedV, _ := loader(key)
-// 		if v != expectedV {
-// 			t.Errorf("Expected value is %v, not %v", expectedV, v)
-// 		}
-// 	}
-// }
+func testGetCache(t *testing.T, gc Cache[string, string], numbers int) {
+	for i := 0; i < numbers; i++ {
+		key := fmt.Sprintf("Key-%d", i)
+		v, err := gc.Get(key)
+		if err != nil {
+			t.Errorf("Unexpected error: %v", err)
+		}
+		expectedV, _ := loader(key)
+		if v != expectedV {
+			t.Errorf("Expected value is %v, not %v", expectedV, v)
+		}
+	}
+}
 
 // func testGetIFPresent(t *testing.T, evT string) {
 // 	cache :=
@@ -132,18 +137,18 @@ package gcache
 // 	}
 // }
 
-// func getSimpleEvictedFunc(t *testing.T) func(interface{}, interface{}) {
-// 	return func(key, value interface{}) {
-// 		t.Logf("Key=%v Value=%v will be evicted.\n", key, value)
-// 	}
-// }
+func getSimpleEvictedFunc(t *testing.T) func(string, string) {
+	return func(key, value string) {
+		t.Logf("Key=%s Value=%s will be evicted.\n", key, value)
+	}
+}
 
-// func buildTestCache(t *testing.T, tp string, size int) Cache {
-// 	return New(size).
-// 		EvictType(tp).
-// 		EvictedFunc(getSimpleEvictedFunc(t)).
-// 		Build()
-// }
+func buildTestCache(t *testing.T, tp CacheType, size int) Cache[string, string] {
+	return New[string, string](size).
+		EvictType(tp).
+		EvictedFunc(getSimpleEvictedFunc(t)).
+		Build()
+}
 
 // func buildTestLoadingCache(t *testing.T, tp string, size int, loader LoaderFunc) Cache {
 // 	return New(size).
